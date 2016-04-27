@@ -3,6 +3,7 @@ FROM ubuntu:14.04
 MAINTAINER Tim Schonberger "flyingtoaster0@gmail.com"
 
 # Install java7
+RUN apt-get update
 RUN apt-get install -y software-properties-common && add-apt-repository -y ppa:webupd8team/java && apt-get update
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 RUN apt-get install -y oracle-java7-installer
@@ -19,15 +20,15 @@ RUN \
 # Install Android Tools
 RUN \
   echo y | /usr/local/android-sdk/tools/android update sdk --filter platform-tools --no-ui --force -a && \
+  echo y | /usr/local/android-sdk/tools/android update sdk --filter build-tools-23.0.2 --no-ui --force -a && \
   echo y | /usr/local/android-sdk/tools/android update sdk --filter build-tools-22.0.1 --no-ui --force -a
 
 # Install Android APIs
 RUN \
   echo y | /usr/local/android-sdk/tools/android update sdk --filter android-23 --no-ui --force -a && \
-  echo y | /usr/local/android-sdk/tools/android update sdk --filter android-22 --no-ui --force -a && \
-  echo y | /usr/local/android-sdk/tools/android update sdk --filter android-21 --no-ui --force -a && \
   echo y | /usr/local/android-sdk/tools/android update sdk --filter extra-android-support --no-ui --force -a && \
   echo y | /usr/local/android-sdk/tools/android update sdk --filter extra-android-m2repository --no-ui --force -a && \
+  echo y | /usr/local/android-sdk/tools/android update sdk --filter extra-google-m2repository --no-ui --force -a && \
   echo y | /usr/local/android-sdk/tools/android update sdk --filter extra-google-google_play_services --no-ui --force -a
 
 # Setup ANDROID_HOME
